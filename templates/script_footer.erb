@@ -1,0 +1,8 @@
+
+    rm -f "$LOCKFILE"
+    trap - INT TERM EXIT
+else
+    echo "Failed to acquire lockfile: $LOCKFILE." 
+    echo "Held by $(cat $LOCKFILE)"
+fi 
+

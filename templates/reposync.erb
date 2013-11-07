@@ -1,0 +1,7 @@
+
+    echo Syncing <%= @name %> with reposync
+    [ -d <%= @fulldestdir %> ] || mkdir -p <%= @fulldestdir %>
+    reposync -d -c <%= @reposync_conf %> -r <%= @name %> --norepopath -p <%= @fulldestdir %>
+    createrepo -c <%= @fulldestdir %>/cache --update <%= @fulldestdir %>
+    echo Done syncing <%= @name %> with reposync
+

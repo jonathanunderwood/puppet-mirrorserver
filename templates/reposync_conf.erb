@@ -1,0 +1,13 @@
+[<%= @name %>]
+name=<%= @description %>
+<% if @baseurl.is_a? Array -%>
+<%= "baseurl=" -%>
+<% @baseurl.each do |url| -%><%= "#{url}\n" %><% end -%>
+<% elsif @baseurl != '' -%>
+<%= "baseurl=#{@baseurl}" %>
+<% end -%>
+<% if @mirrorlist !='' -%>
+<%= "mirrorlist=#{@mirrorlist}" %>
+<% end -%>
+enabled=1
+

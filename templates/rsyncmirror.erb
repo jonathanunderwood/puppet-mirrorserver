@@ -1,0 +1,7 @@
+
+    echo Syncing <%= @name %> with rsync
+    [ -d <%= @fulldestdir %> ] || mkdir -p <%= @fulldestdir %>
+    rsync <%= @rsyncopts %> <%= @source %> <%= @fulldestdir %>
+    echo Done syncing <%= @name %> with rsync
+
+
