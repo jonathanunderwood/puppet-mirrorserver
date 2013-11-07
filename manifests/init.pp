@@ -4,7 +4,7 @@ class mirrorserver (
   $mirror_script = $mirrorserver::params::mirror_script,
   $reposync_conf = $mirrorserver::params::reposync_conf,
   $lockfile = $mirrorserver::params::lockfile,
-)
+) inherits mirrorserver::params
 {
   include concat::setup
   
