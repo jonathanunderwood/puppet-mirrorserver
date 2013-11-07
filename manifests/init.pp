@@ -15,20 +15,20 @@ class mirrorserver (
     mode   => 0755,
   }
 
-  concat {$script:
+  concat {$mirror_script:
     owner  => root,
     group  => root,
     mode   => 0755,
   }
 
   concat::fragment {'script header':
-    target  => $script,
+    target  => $mirror_script,
     order   => 000,
     content => template('mirrorserver/script_header.erb'),
   }
 
   concat::fragment {'script footer':
-    target  => $script,
+    target  => $mirror_script,
     order   => 999,
     content => template('mirrorserver/script_footer.erb'),
   }
