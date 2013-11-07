@@ -7,9 +7,12 @@ define mirrorserver::repo (
   $order
 )
 {
-  $fulldestdir = "${mirrorserver::params::www_root}/${dest_dir}"
+  include mirrorserver
+  include concat::setup
+  
+  $fulldestdir = "${mirrorserver::www_root}/${dest_dir}"
 
-  $reposync_conf = $mirrorserver::params::reposync_conf
+  $reposync_conf = $mirrorserver::reposync_conf
 
   concat::fragment {$name:
     target => $reposync_conf,
@@ -17,7 +20,7 @@ define mirrorserver::repo (
     content => template('mirrorserver/reposync_conf.erb'),
   }
 
-  $script = "${mirrorserver::params::mirror_script}"
+  $script = "${mirrorserver::mirror_script}"
 
   concat::fragment {"${name}_reposync_conf":
     target  => $script,
