@@ -52,13 +52,12 @@ class mirrorserver (
       owner   => root,
       group   => root,
       mode    => 0644,
-      content => template('mirrorserver/mirrors.conf.erb')
+      content => template('mirrorserver/mirrors.conf.erb'),
+    }
   }
   else {
     file {'/etc/httpd/conf.d/mirrors.conf':
       ensure => absent,
     }
   }
-
-  
 }
