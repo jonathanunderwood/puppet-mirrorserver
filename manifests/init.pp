@@ -4,7 +4,8 @@ class mirrorserver (
   $mirror_script = $mirrorserver::params::mirror_script,
   $reposync_conf = $mirrorserver::params::reposync_conf,
   $lockfile = $mirrorserver::params::lockfile,
-) inherits mirrorserver::params
+  $apache_simple_setup = true
+  ) inherits mirrorserver::params
 {
   include concat::setup
   
@@ -44,4 +45,20 @@ class mirrorserver (
     order   => 000,
     content => template('mirrorserver/reposync_header.erb'),
   }
+
+  if $apache_simple_setup {
+    file {'/etc/httpd/conf.d/mirrors.conf':
+      ensure  => present,
+      owner   => root,
+      group   => root,
+      mode    => 0644,
+      content => template('mirrorserver/mirrors.conf.erb')
+  }
+  else {
+    file {'/etc/httpd/conf.d/mirrors.conf':
+      ensure => absent,
+    }
+  }
+
+  
 }
