@@ -47,17 +47,19 @@ class mirrorserver (
   }
 
   if $apache_simple_setup {
-    file {'/etc/httpd/conf.d/mirrors.conf':
+    file {'/etc/httpd/conf.d/mirrorserver.conf':
       ensure  => present,
       owner   => root,
       group   => root,
       mode    => 0644,
       content => template('mirrorserver/mirrors.conf.erb'),
+      notify  =>Service ['httpd'],
     }
   }
   else {
-    file {'/etc/httpd/conf.d/mirrors.conf':
+    file {'/etc/httpd/conf.d/mirrorserver.conf':
       ensure => absent,
+      notify  =>Service ['httpd'],
     }
   }
 }
