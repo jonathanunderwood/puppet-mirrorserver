@@ -46,6 +46,8 @@ class mirrorserver (
     content => template('mirrorserver/reposync_header.erb'),
   }
 
+  # TODO: this is all redhat specific - add variables to make it cross distro.
+  # Also, currently assumes that the apache service is defined elsewhere.
   if $apache_simple_setup {
     file {'/etc/httpd/conf.d/mirrorserver.conf':
       ensure  => present,
