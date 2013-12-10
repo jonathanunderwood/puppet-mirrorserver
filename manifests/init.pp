@@ -16,14 +16,18 @@ class mirrorserver (
     mode   => 0755,
   }
 
+  # If required create an SELinux rule to allow apache to serve
+  # webcontent from the mirror directory.
   exec {"set $www_root SELinux type":
     path    => ['/usr/bin', '/usr/sbin', '/bin', '/sbin'],
     command => "semanage fcontext -a -t httpd_sys_content_t \"$www_root(/.*)?\" && restorecon -R $www_root",
     # Either of these "unless" actions is ok, but the second one is
-    # faster. The first more correctly checks for the exact rule above
-    # though.
-    unless  => "semanage fcontext -l | grep $www_root >/dev/null 2>&1",
-    # unless  => "matchpathcon $www_root | grep httpd_sys_content_t >/dev/null 2>&1",
+    # faster. The first correctly checks for the exact rule above
+    # though. The second checks to see if other rules provide the
+    # correct type for the directory in question, which is what we
+    # want to do in this case i.e. only create a rule if it is needed.
+    #unless  => "semanage fcontext -l | grep $www_root >/dev/null 2>&1",
+    unless  => "matchpathcon $www_root | grep httpd_sys_content_t >/dev/null 2>&1",
     require => File [$www_root],
   }
 
